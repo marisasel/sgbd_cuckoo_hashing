@@ -15,9 +15,8 @@ typedef struct hash_t {
 void inicializa_tabelas(hash_t *t1, hash_t *t2);
 int h1(int k);
 int h2(int k);
+int busca_chave(int k, hash_t *t1, hash_t *t2);
 void insere_chave(int k, hash_t *t1, hash_t *t2);
 void exclui_chave(int k, hash_t *t1, hash_t *t2); 
-int busca_chave(int k, hash_t *t1, hash_t *t2);
-void gera_saida(hash_t *t1, hash_t *t2);
 
 #endif

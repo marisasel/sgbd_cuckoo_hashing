@@ -10,7 +10,7 @@
 
 typedef struct saida_t {
     int k;          // armazena o valor da chave
-    char tabela[3]; // armezana a tabela: "T1" ou "T2"
+    char tabela[3]; // armezena a tabela: "T1" ou "T2"
     int posicao;    // armazena a posição na qual o valor está armazenado na tabela
 } saida_t;
 
