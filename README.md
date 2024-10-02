@@ -10,10 +10,14 @@ Conforme explicado anteriormente, inserir uma nova chave em uma tabela de Cuckoo
 ## Compilação, execução, entrada e saída do programa
 
 Para compilar, execute no terminal:
+```
 $ make
+```
 
 Para executar, digite no terminal:
+```
 $ ./myht < teste.in > teste.out
+```
 
 No arquivo de entrada (teste.in), que é feita pela entrada padrão, cada linha representa uma operação e uma chave inteira. A inclusão é sinalizada com (i) e remoção com (r). Já o arquivo de saída (teste.out)
 traz três informações por linha, separadas por vírgula: chave, tabela (T1 ou T2), posição de armazenamento. A ordenação, em ordem crescente, acontece pela chave. Caso não existam chaves armazenadas, nenhum valor será gravado na saída padrão.
@@ -22,17 +26,25 @@ traz três informações por linha, separadas por vírgula: chave, tabela (T1 ou
 O programa principal está no arquivo myht.c. Foram implementadas ainda duas bibliotecas: hash_table.c, que traz as funções necessárias à implementação da versão simplificada do algoritmo Cuckoo Hashing, e auxiliar.c, que traz as funções necessárias à geração da saída.
 
 ## Estruturas de dados
-● hash_t - Utilizada para a criação das tabelas hash, é composta por dois inteiros: int k - armazena o valor da chave; int status - armazena o status da posição da tabela. Na
+
+- hash_t - Utilizada para a criação das tabelas hash, é composta por dois inteiros: int k - armazena o valor da chave; int status - armazena o status da posição da tabela. Na
 implementação, -1 representa que a chave foi excluída da posição, 0 representa nulo (posição nunca ocupada) e 1 representa que a posição está ocupada;
-● saida_t - Utilizada para a criação da saída, é composta por dois inteiros e um vetor de char: int k - armazena o valor da chave; char tabela[3] - armazena a tabela: “T1” ou “T2”; int posicao - armazena a posição no qual o valor está armazenado na tabela;
+
+- saida_t - Utilizada para a criação da saída, é composta por dois inteiros e um vetor de char: int k - armazena o valor da chave; char tabela[3] - armazena a tabela: “T1” ou “T2”; int posicao - armazena a posição no qual o valor está armazenado na tabela;
 
 ## Funções principais
-● void inicializa_tabelas(hash_t *t1, hash_t *t2) - recebe duas tabelas hash e inicializa tanto a chave quanto o status com 0, indicando valores nulos e que as posições nunca foram ocupadas;
-● int h1(int k) - recebe uma chave (k) e retorna sua posição aplicando a função hash h1(k) = k mod m;
-● int h2(int k) - recebe uma chave (k) e retorna sua posição aplicando a função hash h2(k) = ⌊m * (k * 0.9 − ⌊k * 0.9⌋)⌋;
-● int busca_chave(int k, hash_t *t1, hash_t *t2) - recebe uma chave (k) e as duas tabelas hash. Devido ao tratamento de colisão na inclusão e na exclusão implementado, se a posição da chave k calculada poer h1(k) estiver vazia, indica que a chave não foi encontrada. Caso contrário, retorna a posição da chave em T1 ou em T2;
-● void insere_chave(int k, hash_t *t1, hash_t *t2) - recebe uma chave e as duas tabelas hash. Caso não seja uma chave duplicada/já inserida, a função verifica se a posição em T1 está vazia, insere a chave caso esteja e atualiza o status da posição para 1. Se houver colisão em T1, a chave originalmente grava em T1 é movida para T2 e a nova chave é armazenada na T1. Os status das posições são atualizados;
-● void exclui_chave(int k, hash_t *t1, hash_t *t2) - recebe uma chave e as duas tabelas hash. Caso a busca encontre a chave e ela esteja na T1, a chave é excluída (k recebe 0) e o status da posição na tabela é atualizado para indicar a exclusão (status recebe -1). Caso esteja na T2, esses parâmetros são atualizados em T2.
+
+- void inicializa_tabelas(hash_t *t1, hash_t *t2) - recebe duas tabelas hash e inicializa tanto a chave quanto o status com 0, indicando valores nulos e que as posições nunca foram ocupadas;
+
+- int h1(int k) - recebe uma chave (k) e retorna sua posição aplicando a função hash h1(k) = k mod m;
+
+- int h2(int k) - recebe uma chave (k) e retorna sua posição aplicando a função hash h2(k) = ⌊m * (k * 0.9 − ⌊k * 0.9⌋)⌋;
+
+- int busca_chave(int k, hash_t *t1, hash_t *t2) - recebe uma chave (k) e as duas tabelas hash. Devido ao tratamento de colisão na inclusão e na exclusão implementado, se a posição da chave k calculada poer h1(k) estiver vazia, indica que a chave não foi encontrada. Caso contrário, retorna a posição da chave em T1 ou em T2;
+
+- void insere_chave(int k, hash_t *t1, hash_t *t2) - recebe uma chave e as duas tabelas hash. Caso não seja uma chave duplicada/já inserida, a função verifica se a posição em T1 está vazia, insere a chave caso esteja e atualiza o status da posição para 1. Se houver colisão em T1, a chave originalmente grava em T1 é movida para T2 e a nova chave é armazenada na T1. Os status das posições são atualizados;
+
+- void exclui_chave(int k, hash_t *t1, hash_t *t2) - recebe uma chave e as duas tabelas hash. Caso a busca encontre a chave e ela esteja na T1, a chave é excluída (k recebe 0) e o status da posição na tabela é atualizado para indicar a exclusão (status recebe -1). Caso esteja na T2, esses parâmetros são atualizados em T2.
 
 Há comentários complementares ao longo do código que explicam de forma mais esmiuçada as implementações dessas funções e das funções auxiliares.
 
